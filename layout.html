@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="hipackage/htv.js"></script>
+	<style>
+	div{text-align:center;}
+	</style>
+</head>
+<body>
+	<div style="position:relative;width:500px;height:200px;margin:30px auto;">
+		<div style="width:100px;">
+			<div id="menu1">图像</div>
+			<div id="menu2">声音</div>
+		</div>
+		<div style="position:absolute;width:100px;left:160px;">
+			<div id="menu1Set">
+				<div id="set11Dis11" >Picture Mode</div>
+				<div id="set11Dis12" >Brightness </div>
+			</div>
+			<div id="menu2Set">
+				<div id="set12Dis11" >Sound Mode</div>
+				<div id="set12Dis12" >Equalizer</div>
+			</div>
+		</div>
+		<div style="position:absolute;width:100px;left:360px;">
+			<div id="set11Dis11Detail">
+				<div id="Picture1" >Picture1</div>
+				<div id="Picture2" >Picture2 </div>
+			</div>
+			<div id="set11Dis12Detail">
+				<div id="Brightness1" >Brightness1</div>
+				<div id="Brightness2" >Brightness2</div>
+			</div>
+			<div id="set12Dis11Detail">
+				<div id="Sound1" >Sound1</div>
+				<div id="Sound2" >Sound2 </div>
+			</div>
+			<div id="set12Dis12Detail">
+				<div id="Equalizer1" >Equalizer1</div>
+				<div id="Equalizer2" >Equalizer2</div>
+			</div>
+		</div>
+	</div>
+	<div style="position:relative;">
+		<input type="button" style="width:100px;height:30px;" value="弹出框" onclick="showDialog();"/>
+	</div>
+	<div id="bg" style="display:none;position:fixed;top:0;width:100%;height:100%;background:#000;opacity:.3;"></div>
+	<div id="dialog" style="display:none;position:fixed;top:30px;left:0;right:0;width:400px;height:360px;margin:0 auto;border:3px solid #ddd;background:#fff;">
+		<input type="button" style="display:block;position:relative;top:150px;width:100px;height:30px;margin:0 auto;" value="关闭弹出框" onclick="hideDialog();"/>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+function showDialog(){
+	$E('bg').style.display = 'block';
+	$E('dialog').style.display = 'block';
+	HtvController.setKeyResponseId('dialog');
+}
+function hideDialog(){
+	$E('bg').style.display = 'none';
+	$E('dialog').style.display = 'none';
+	HtvController.setKeyResponseId('settings');
+}
+function action(){
+	var zoneLeft =
+		{
+			data:[[{id:'menu1',relatedLayId:'menu1Set'}],[{id:'menu2',relatedLayId:'menu2Set'}]],
+			selectAction:function(curId){
+				if(curId == "menu1") zoneRight.disLayerIndex = 0;
+				else if(curId == "menu2") zoneRight.disLayerIndex = 1;
+				return zoneRight;
+			}
+			//selectCss:"mainMenufocus",
+			//leaveZoneCss:"mainMenuleave",
+			//selectRelatedZoneCss:"setDivdis",
+			//unselectRelatedZoneCss:"setDiv",
+		}
+
+	var zoneRight = [
+		{
+			data:[[{id:'set11Dis11',relatedLayId:'set11Dis11Detail'}],[{id:'set11Dis12',relatedLayId:'set11Dis12Detail'}]],
+			layerId:'menu1Set',
+			selectAction:function(curId){
+				if(curId == "set11Dis11") zoneDetail.disLayerIndex = 0;
+				else if(curId == "set11Dis12") zoneDetail.disLayerIndex = 1;
+				return zoneDetail;
+			}
+		},
+	    {
+			data : [[{id:'set12Dis11',relatedLayId:'set12Dis11Detail'}],[{id:'set12Dis12',relatedLayId:'set12Dis12Detail'}]],
+			layerId : 'menu2Set',
+			selectAction : function(curId){
+				if(curId == "set12Dis11") zoneDetail.disLayerIndex = 2;
+				else if(curId == "set12Dis12") zoneDetail.disLayerIndex = 3;
+				return zoneDetail;
+			}
+		}
+	];
+
+	var zoneDetail = [
+		{
+			data:[[{id:"Picture1"}],[{id:"Picture2"}]],
+			layerId : 'set11Dis11Detail'
+		},
+		{
+			data:[[{id:"Brightness1"}],[{id:"Brightness2"}]],
+			layerId : 'set11Dis12Detail'
+		},
+		{
+			data:[[{id:"Sound1"}],[{id:"Sound2"}]],
+			layerId : 'set12Dis11Detail'
+		},
+		{
+			data:[[{id:"Equalizer1"}],[{id:"Equalizer2"}]],
+			layerId : 'set12Dis12Detail'
+		}
+	];
+	var selectedZones = [zoneLeft,zoneRight,zoneDetail];
+	var json = {zones:selectedZones,keyResponseId:'settings',direct:'left'};
+	Htv(json);
+}
+window.onload = action;
+
+</script>
