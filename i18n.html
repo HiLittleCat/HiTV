@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="hipackage/htv.js"></script>
+</head>
+<body >
+<div id="app_1"></div>
+<div id="app_2"></div>
+</body>
+
+<script id="t:hiApp-1" type="text/html">
+<input type="button" value="<%=xpf%>"></input>
+</script>
+<script id="t:hiApp-2" type="text/html">
+<input type="button" value="<%=xpf%>"></input>
+</script>
+<script>
+window.onload = function(){
+	var HtmlTpl = {'t:hiApp-1':'app_1','t:hiApp-2':'app_2'};
+	LoadAllTpl(HtmlTpl);
+}
+</script>
+</html>
