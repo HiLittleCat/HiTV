@@ -1,0 +1,31 @@
+.hiddenElementVs{
+    visibility: hidden;
+}
+.showElementVs{
+    visibility: visible;
+}
+.hiddenElementDs{
+    display:none;
+}
+.showElementDs{
+    display: block;
+}
+.htvSelectCss{
+	border: 1px solid #FA6F02;	
+	cursor:pointer;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px #FA6F02;
+	transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+.htvLeaveZoneCss{
+	border:1px solid #F1E665;
+	cursor:pointer;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px #F1E665;
+	transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+.htvSelectRelatedZoneCss{
+	display: block;
+}
+.htvUnselectRelatedZoneCss{
+	display:none;
+}
+
